@@ -1,0 +1,261 @@
+<title>Mapa da Equipe Mobi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: full-bleed map stage with floating controls; tap card; state chips below */
+:root{
+  --bg:#f3f6f5; --paper:#ffffff; --ink:#15302b; --muted:#5d7470;
+  --sea:#e8f0ee; --land:#d3e4de; --border:#a6c3ba; --accent:#0f8a6e; --glow:15,138,110; --line:#c9dbd5;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Figtree",system-ui,-apple-system,sans-serif;
+  --emoji:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1716; --paper:#14201e; --ink:#e3efec; --muted:#8fa8a2;
+  --sea:#101c1a; --land:#1f3531; --border:#3d5f58; --accent:#3cc9a3; --glow:60,201,163; --line:#2c4742; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1716; --paper:#14201e; --ink:#e3efec; --muted:#8fa8a2;
+  --sea:#101c1a; --land:#1f3531; --border:#3d5f58; --accent:#3cc9a3; --glow:60,201,163; --line:#2c4742; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding-inline:16px;padding-block:24px 40px;display:grid;gap:18px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,6vw,42px);line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.sub{color:var(--muted);margin:4px 0 0;max-width:60ch}
+.stats{display:flex;gap:18px;font-variant-numeric:tabular-nums}
+.stats b{font-family:var(--display);font-size:24px;color:var(--accent);margin-right:4px}
+.stage{position:relative;height:min(78vh,760px);min-height:440px;background:var(--sea);border:1px solid var(--line);border-radius:16px;overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.stage.dragging{cursor:grabbing}
+#land{position:absolute;left:0;top:0;transform-origin:0 0;overflow:visible}
+#land path{fill:var(--land);stroke:var(--border);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+#fx{position:absolute;inset:0;pointer-events:none}
+.glow{position:absolute;left:0;top:0;border-radius:50%;background:radial-gradient(circle,rgba(var(--glow),.42) 0%,rgba(var(--glow),.16) 45%,rgba(var(--glow),0) 70%);will-change:transform}
+.emo{position:absolute;left:0;top:0;font-family:var(--emoji);line-height:1;pointer-events:auto;cursor:pointer;will-change:transform;filter:drop-shadow(0 2px 2px rgba(0,0,0,.18))}
+.emo span{display:block;transition:transform .15s}
+.emo:hover span,.emo.sel span{transform:scale(1.35)}
+.emo:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ctrl{position:absolute;right:12px;top:12px;display:grid;gap:6px}
+.ctrl button,.regions button{font:600 14px var(--body);color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;cursor:pointer}
+.ctrl button{width:38px;height:38px;font-size:18px}
+.ctrl button:hover,.regions button:hover{border-color:var(--accent)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.regions{position:absolute;left:12px;top:12px;display:flex;flex-wrap:wrap;gap:6px;max-width:calc(100% - 70px)}
+.regions button{padding:6px 12px}
+.regions button.on{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+.hint{position:absolute;left:12px;bottom:12px;font-size:12px;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px 10px;pointer-events:none}
+.card{position:absolute;right:12px;bottom:12px;width:min(280px,calc(100% - 24px));background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.12);display:grid;gap:8px}
+.card .top{display:flex;gap:10px;align-items:center}
+.card .big{font-family:var(--emoji);font-size:38px;line-height:1}
+.card .nm{font-family:var(--display);font-weight:800;font-size:20px;line-height:1.1}
+.card .ct{color:var(--muted);font-size:13px}
+.card .also{font-size:13px;border-top:1px solid var(--line);padding-top:8px}
+.card .also span{white-space:nowrap;margin-right:10px}
+.card .x{position:absolute;right:8px;top:6px;background:none;border:0;color:var(--muted);font-size:18px;cursor:pointer}
+.ufs{display:flex;flex-wrap:wrap;gap:8px}
+.uf{display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 6px;cursor:pointer;font:500 14px var(--body);color:var(--ink)}
+.uf:hover{border-color:var(--accent)}
+.uf b{font-family:var(--display);color:var(--paper);background:var(--accent);border-radius:999px;padding:1px 8px;font-size:12px;letter-spacing:.05em}
+.uf i{font-style:normal;font-family:var(--emoji);letter-spacing:-.15em}
+.uf em{font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
+.card[hidden],.hint[hidden]{display:none}
+footer{color:var(--muted);font-size:13px}
+</style>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Onde mora a equipe Mobi</h1>
+      <p class="sub">Colaboradores ativos na base 💵 Fin Mobi, pelo município de residência. Onde o brilho é mais forte, mais gente mora perto.</p>
+    </div>
+    <div class="stats"><span><b>%%N%%</b>pessoas</span><span><b>%%C%%</b>cidades</span><span><b>%%U%%</b>estados</span></div>
+  </header>
+
+  <div class="stage" id="stage">
+    %%SVG%%
+    <div id="fx"></div>
+    <div class="regions" id="regions">
+      <button data-r="br" class="on">Brasil</button>
+      <button data-r="se">Sudeste</button>
+      <button data-r="ne">Nordeste</button>
+      <button data-r="s">Sul</button>
+    </div>
+    <div class="ctrl">
+      <button id="zin" aria-label="Aproximar">+</button>
+      <button id="zout" aria-label="Afastar">−</button>
+      <button id="zreset" aria-label="Ver o Brasil inteiro">⤢</button>
+    </div>
+    <div class="hint" id="hint">Arraste, use o scroll ou pinça para dar zoom. Toque num emoji.</div>
+    <div class="card" id="card" hidden></div>
+  </div>
+
+  <div class="ufs" id="ufs"></div>
+  <footer>Atualizado em %%ATUALIZADO%%. Posições aproximadas pelo centro de cada município.</footer>
+</div>
+<script>
+const D = %%DATA%%;
+const stage = document.getElementById('stage'), land = document.getElementById('land'), fx = document.getElementById('fx');
+const card = document.getElementById('card');
+land.setAttribute('width', D.w); land.setAttribute('height', D.h);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// cities
+const cityMap = new Map();
+D.p.forEach(p => { const k = p.c + '|' + p.uf; if (!cityMap.has(k)) cityMap.set(k, {c:p.c, uf:p.uf, x:p.x, y:p.y, ppl:[]}); cityMap.get(k).ppl.push(p); });
+const cities = [...cityMap.values()];
+
+// glows (density)
+cities.forEach(c => { const g = document.createElement('div'); g.className = 'glow'; fx.appendChild(g); c.el = g; });
+// emojis, spread in a tight spiral around the city so they overlap
+D.p.forEach(p => {
+  const c = cityMap.get(p.c + '|' + p.uf); const i = c.ppl.indexOf(p);
+  p.i = i; p.ang = i * 2.39996 + (p.x % 7); p.rad = c.ppl.length > 1 ? 7 + 6 * Math.sqrt(i) : 0;
+  p.ph = [Math.random() * 6.28, Math.random() * 6.28, Math.random() * 6.28]; p.sp = .75 + Math.random() * .5;
+  const el = document.createElement('div'); el.className = 'emo'; el.tabIndex = 0;
+  el.setAttribute('role', 'button'); el.setAttribute('aria-label', p.n + ', ' + p.c + ' - ' + p.uf);
+  el.innerHTML = '<span>' + p.e + '</span>'; fx.appendChild(el); p.el = el;
+  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(p); } });
+});
+
+// view state
+let view = {s:1, tx:0, ty:0}, fit = 1, anim = null, lastInteract = -1e9, amp = 0;
+function bbox(pts, pad) {
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  pts.forEach(p => { x0 = Math.min(x0, p.x); y0 = Math.min(y0, p.y); x1 = Math.max(x1, p.x); y1 = Math.max(y1, p.y); });
+  return [x0 - pad, y0 - pad, x1 + pad, y1 + pad];
+}
+function viewFor(b) {
+  const W = stage.clientWidth, H = stage.clientHeight;
+  const s = Math.min(W / (b[2] - b[0]), H / (b[3] - b[1]), fit * 14);
+  return {s, tx: W / 2 - s * (b[0] + b[2]) / 2, ty: H / 2 - s * (b[1] + b[3]) / 2};
+}
+const REG = {
+  br: [-20, -10, D.w + 70, D.h + 20],
+  se: bbox(D.p.filter(p => ['SP','RJ','MG','ES'].includes(p.uf)), 60),
+  ne: bbox(D.p.filter(p => ['BA','PE','PB','RN','CE','PI','MA','AL','SE'].includes(p.uf)), 60),
+  s:  bbox(D.p.filter(p => ['SC','RS','PR'].includes(p.uf)), 90),
+};
+Object.keys(REG).forEach(r => { if (!isFinite(REG[r][0])) { delete REG[r]; const b = document.querySelector('#regions button[data-r="' + r + '"]'); if (b) b.hidden = true; } });
+function setFit() { const W = stage.clientWidth, H = stage.clientHeight; fit = Math.min(W / D.w, H / D.h) * .94; }
+function clampView(v) { v.s = Math.max(fit * .8, Math.min(fit * 16, v.s)); return v; }
+function go(target, ms = 550) {
+  const from = {...view}, t0 = performance.now();
+  if (reduce) ms = 0;
+  anim = {from, to: clampView(target), t0, ms};
+}
+function zoomAt(f, cx, cy) {
+  anim = null; const s = Math.max(fit * .8, Math.min(fit * 16, view.s * f)); const k = s / view.s;
+  view = {s, tx: cx - (cx - view.tx) * k, ty: cy - (cy - view.ty) * k};
+}
+function setRegion(r) {
+  document.querySelectorAll('#regions button').forEach(b => b.classList.toggle('on', b.dataset.r === r));
+  go(viewFor(REG[r]));
+}
+
+// interaction
+const ptrs = new Map(); let moved = 0, pinch = null, downTarget = null;
+function touch() { lastInteract = performance.now(); }
+stage.addEventListener('pointerdown', e => {
+  if (e.target.closest('button,.card')) return;
+  touch(); anim = null; ptrs.set(e.pointerId, {x: e.clientX, y: e.clientY}); moved = 0;
+  downTarget = e.target.closest('.emo');
+  stage.setPointerCapture(e.pointerId); stage.classList.add('dragging');
+  if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch = {d: Math.hypot(a.x - b.x, a.y - b.y)}; }
+});
+stage.addEventListener('pointermove', e => {
+  if (!ptrs.has(e.pointerId)) return;
+  touch(); const prev = ptrs.get(e.pointerId); const cur = {x: e.clientX, y: e.clientY};
+  if (ptrs.size === 1) {
+    view.tx += cur.x - prev.x; view.ty += cur.y - prev.y; moved += Math.abs(cur.x - prev.x) + Math.abs(cur.y - prev.y);
+    ptrs.set(e.pointerId, cur);
+  } else if (ptrs.size === 2) {
+    ptrs.set(e.pointerId, cur); const [a, b] = [...ptrs.values()];
+    const d = Math.hypot(a.x - b.x, a.y - b.y); const r = stage.getBoundingClientRect();
+    zoomAt(d / pinch.d, (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top); pinch.d = d; moved += 10;
+  }
+});
+function up(e) {
+  if (!ptrs.has(e.pointerId)) return;
+  ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch = null;
+  if (!ptrs.size) {
+    stage.classList.remove('dragging');
+    if (moved < 6) { const p = downTarget && D.p.find(q => q.el === downTarget); p ? select(p) : select(null); }
+  }
+}
+stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+stage.addEventListener('wheel', e => {
+  e.preventDefault(); touch(); const r = stage.getBoundingClientRect();
+  zoomAt(Math.exp(-e.deltaY * .0016), e.clientX - r.left, e.clientY - r.top);
+}, {passive: false});
+const center = () => [stage.clientWidth / 2, stage.clientHeight / 2];
+document.getElementById('zin').onclick = () => { touch(); const [x, y] = center(); go(zoomAtTarget(1.6, x, y), 300); };
+document.getElementById('zout').onclick = () => { touch(); const [x, y] = center(); go(zoomAtTarget(1 / 1.6, x, y), 300); };
+document.getElementById('zreset').onclick = () => { touch(); setRegion('br'); };
+function zoomAtTarget(f, cx, cy) { const s = view.s * f, k = s / view.s; return {s, tx: cx - (cx - view.tx) * k, ty: cy - (cy - view.ty) * k}; }
+document.querySelectorAll('#regions button').forEach(b => b.onclick = () => { touch(); setRegion(b.dataset.r); });
+
+// selection card
+let sel = null;
+function esc(s) { return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function select(p) {
+  if (sel) sel.el.classList.remove('sel');
+  sel = p;
+  if (!p) { card.hidden = true; return; }
+  p.el.classList.add('sel');
+  const c = cityMap.get(p.c + '|' + p.uf); const others = c.ppl.filter(q => q !== p);
+  card.innerHTML = '<button class="x" aria-label="Fechar">×</button><div class="top"><div class="big">' + p.e + '</div><div><div class="nm">' + esc(p.n) +
+    '</div><div class="ct">' + esc(p.c) + ' - ' + p.uf + '</div></div></div>' +
+    (others.length ? '<div class="also">Também em ' + esc(p.c) + ': ' + others.map(q => '<span>' + q.e + ' ' + esc(q.n) + '</span>').join('') + '</div>' : '');
+  card.hidden = false; card.querySelector('.x').onclick = () => select(null);
+}
+
+// state chips
+const ufOrder = {}; D.p.forEach(p => (ufOrder[p.uf] = ufOrder[p.uf] || []).push(p));
+const ufName = {AC:'Acre',AL:'Alagoas',AP:'Amapá',AM:'Amazonas',BA:'Bahia',CE:'Ceará',DF:'Distrito Federal',ES:'Espírito Santo',GO:'Goiás',MA:'Maranhão',MT:'Mato Grosso',MS:'Mato Grosso do Sul',MG:'Minas Gerais',PA:'Pará',PB:'Paraíba',PR:'Paraná',PE:'Pernambuco',PI:'Piauí',RJ:'Rio de Janeiro',RN:'Rio Grande do Norte',RS:'Rio Grande do Sul',RO:'Rondônia',RR:'Roraima',SC:'Santa Catarina',SP:'São Paulo',SE:'Sergipe',TO:'Tocantins'};
+const ufs = document.getElementById('ufs');
+Object.entries(ufOrder).sort((a, b) => b[1].length - a[1].length).forEach(([uf, ps]) => {
+  const b = document.createElement('button'); b.className = 'uf';
+  b.innerHTML = '<b>' + uf + '</b>' + ufName[uf] + ' <i>' + ps.map(p => p.e).join('') + '</i> <em>' + ps.length + '</em>';
+  b.onclick = () => { touch(); document.querySelectorAll('#regions button').forEach(x => x.classList.remove('on'));
+    go(viewFor(bbox(ps, ps.length > 1 ? 40 : 25))); stage.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'center'}); };
+  ufs.appendChild(b);
+});
+
+// render loop
+const ease = t => 1 - Math.pow(1 - t, 3);
+function frame(now) {
+  if (anim) {
+    const t = anim.ms ? Math.min(1, (now - anim.t0) / anim.ms) : 1, k = ease(t);
+    // interpolate in log-scale for smooth zoom
+    const s = Math.exp(Math.log(anim.from.s) + (Math.log(anim.to.s) - Math.log(anim.from.s)) * k);
+    view = {s, tx: anim.from.tx + (anim.to.tx - anim.from.tx) * k, ty: anim.from.ty + (anim.to.ty - anim.from.ty) * k};
+    if (t >= 1) anim = null; touch();
+  }
+  land.style.transform = 'translate(' + view.tx + 'px,' + view.ty + 'px) scale(' + view.s + ')';
+  const idle = !reduce && now - lastInteract > 1400 && !ptrs.size;
+  amp += ((idle ? 1 : 0) - amp) * (idle ? .02 : .15);
+  const z = Math.log2(view.s / fit);
+  const fs = Math.max(22, Math.min(36, 24 + 5 * z));
+  const spread = Math.max(.8, Math.min(1.8, 1 + .35 * z));
+  const t = now / 1000;
+  cities.forEach(c => {
+    const sx = c.x * view.s + view.tx, sy = c.y * view.s + view.ty;
+    const r = (34 + 22 * Math.sqrt(c.ppl.length)) * Math.max(.9, Math.min(1.6, 1 + .25 * z));
+    c.el.style.width = c.el.style.height = (r * 2) + 'px';
+    c.el.style.transform = 'translate(' + (sx - r) + 'px,' + (sy - r) + 'px)';
+  });
+  D.p.forEach(p => {
+    const sx = p.x * view.s + view.tx + Math.cos(p.ang) * p.rad * spread;
+    const sy = p.y * view.s + view.ty + Math.sin(p.ang) * p.rad * spread;
+    const fx_ = amp * 3.5 * Math.sin(t * .9 * p.sp + p.ph[0]);
+    const fy_ = amp * 5 * Math.sin(t * 1.15 * p.sp + p.ph[1]);
+    const rot = amp * 6 * Math.sin(t * .7 * p.sp + p.ph[2]);
+    p.el.style.fontSize = fs + 'px';
+    p.el.style.transform = 'translate(' + (sx - fs / 2 + fx_) + 'px,' + (sy - fs / 2 + fy_) + 'px) rotate(' + rot + 'deg)';
+    p.el.style.zIndex = Math.round(p.y + p.i);
+  });
+  requestAnimationFrame(frame);
+}
+function init() { setFit(); view = viewFor(REG.br); }
+init();
+new ResizeObserver(() => { const oldFit = fit; setFit(); if (Math.abs(view.s - oldFit) / oldFit < .02 || view.s < fit) view = viewFor(REG.br); }).observe(stage);
+requestAnimationFrame(frame);
+setTimeout(() => { const h = document.getElementById('hint'); if (h) h.hidden = true; }, 7000);
+</script>
