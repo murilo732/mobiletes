@@ -4,216 +4,247 @@
   "nome": "Evandro",
   "cidade": "São Paulo",
   "uf": "SP",
-  "signo": "Câncer"
+  "signo": "Câncer",
+  "inicio": "2025-01-20"
  },
  {
   "emoji": "🧝‍♀️",
   "nome": "Edy",
   "cidade": "São Paulo",
   "uf": "SP",
-  "signo": "Leão"
+  "signo": "Leão",
+  "inicio": "2022-01-03"
  },
  {
   "emoji": "🪆",
   "nome": "Ana",
   "cidade": "São Paulo",
   "uf": "SP",
-  "signo": "Capricórnio"
+  "signo": "Capricórnio",
+  "inicio": "2022-09-01"
  },
  {
   "emoji": "🧙🏻‍♀️",
   "nome": "Angélica",
   "cidade": "São Paulo",
   "uf": "SP",
-  "signo": "Aquário"
+  "signo": "Aquário",
+  "inicio": "2020-12-08"
  },
  {
   "emoji": "🧘🏻‍♀️",
   "nome": "Tais",
   "cidade": "Indaiatuba",
   "uf": "SP",
-  "signo": "Câncer"
+  "signo": "Câncer",
+  "inicio": "2017-03-15"
  },
  {
   "emoji": "🐙",
   "nome": "Murilo",
   "cidade": "Indaiatuba",
   "uf": "SP",
-  "signo": "Gêmeos"
+  "signo": "Gêmeos",
+  "inicio": "2017-03-15"
  },
  {
   "emoji": "🐿️",
   "nome": "Paula",
   "cidade": "Botucatu",
   "uf": "SP",
-  "signo": "Virgem"
+  "signo": "Virgem",
+  "inicio": "2023-10-09"
  },
  {
   "emoji": "🪼",
   "nome": "Isa",
   "cidade": "Botucatu",
   "uf": "SP",
-  "signo": "Gêmeos"
+  "signo": "Gêmeos",
+  "inicio": "2024-04-25"
  },
  {
   "emoji": "🧸",
   "nome": "Moni",
   "cidade": "Santos",
   "uf": "SP",
-  "signo": "Câncer"
+  "signo": "Câncer",
+  "inicio": "2024-04-22"
  },
  {
   "emoji": "🦢",
   "nome": "Nay",
   "cidade": "Taubaté",
   "uf": "SP",
-  "signo": "Escorpião"
+  "signo": "Escorpião",
+  "inicio": "2026-02-09"
  },
  {
   "emoji": "🦉",
   "nome": "Taynara",
   "cidade": "Santa Branca",
   "uf": "SP",
-  "signo": "Libra"
+  "signo": "Libra",
+  "inicio": "2022-11-07"
  },
  {
   "emoji": "🐺",
   "nome": "Nanda",
   "cidade": "Resende",
   "uf": "RJ",
-  "signo": "Áries"
+  "signo": "Áries",
+  "inicio": "2024-06-17"
  },
  {
   "emoji": "📕",
   "nome": "Giovanna",
   "cidade": "Niterói",
   "uf": "RJ",
-  "signo": "Áries"
+  "signo": "Áries",
+  "inicio": "2025-09-01"
  },
  {
   "emoji": "🧜🏻‍♀️",
   "nome": "Cláudia",
   "cidade": "Belo Horizonte",
   "uf": "MG",
-  "signo": "Capricórnio"
+  "signo": "Capricórnio",
+  "inicio": "2021-05-03"
  },
  {
   "emoji": "🔺",
   "nome": "Lívia",
   "cidade": "Andradas",
   "uf": "MG",
-  "signo": "Touro"
+  "signo": "Touro",
+  "inicio": "2026-03-09"
  },
  {
   "emoji": "🦖",
   "nome": "Vitor",
   "cidade": "Feira de Santana",
   "uf": "BA",
-  "signo": "Virgem"
+  "signo": "Virgem",
+  "inicio": "2023-12-04"
  },
  {
   "emoji": "🫀",
   "nome": "Letícia",
   "cidade": "Feira de Santana",
   "uf": "BA",
-  "signo": "Libra"
+  "signo": "Libra",
+  "inicio": "2024-07-15"
  },
  {
   "emoji": "🌟",
   "nome": "Taciano",
   "cidade": "Salvador",
   "uf": "BA",
-  "signo": "Touro"
+  "signo": "Touro",
+  "inicio": "2024-08-26"
  },
  {
   "emoji": "🛩️",
   "nome": "Alriany",
   "cidade": "Porto Seguro",
   "uf": "BA",
-  "signo": "Escorpião"
+  "signo": "Escorpião",
+  "inicio": "2025-05-26"
  },
  {
   "emoji": "🐞",
   "nome": "Allana",
   "cidade": "Extremoz",
   "uf": "RN",
-  "signo": "Virgem"
+  "signo": "Virgem",
+  "inicio": "2023-09-26"
  },
  {
   "emoji": "🌚",
   "nome": "Layse",
   "cidade": "Natal",
   "uf": "RN",
-  "signo": "Touro"
+  "signo": "Touro",
+  "inicio": "2026-09-21"
  },
  {
   "emoji": "🌻",
   "nome": "Ailka",
   "cidade": "João Pessoa",
   "uf": "PB",
-  "signo": "Escorpião"
+  "signo": "Escorpião",
+  "inicio": "2025-07-21"
  },
  {
   "emoji": "👩🏼‍🌾",
   "nome": "Miri",
   "cidade": "João Pessoa",
   "uf": "PB",
-  "signo": "Sagitário"
+  "signo": "Sagitário",
+  "inicio": "2026-09-21"
  },
  {
   "emoji": "🐻",
   "nome": "Kaline",
   "cidade": "Caruaru",
   "uf": "PE",
-  "signo": "Gêmeos"
+  "signo": "Gêmeos",
+  "inicio": "2022-11-01"
  },
  {
   "emoji": "🧞‍♀️",
   "nome": "Amanda",
   "cidade": "Jaboatão dos Guararapes",
   "uf": "PE",
-  "signo": "Capricórnio"
+  "signo": "Capricórnio",
+  "inicio": "2021-10-04"
  },
  {
   "emoji": "🐨",
   "nome": "Isa",
   "cidade": "Fortaleza",
   "uf": "CE",
-  "signo": "Aquário"
+  "signo": "Aquário",
+  "inicio": "2024-10-14"
  },
  {
   "emoji": "🐈‍⬛",
   "nome": "Manu",
   "cidade": "São Benedito",
   "uf": "CE",
-  "signo": "Escorpião"
+  "signo": "Escorpião",
+  "inicio": "2024-04-08"
  },
  {
   "emoji": "😻",
   "nome": "Carol",
   "cidade": "Parnaíba",
   "uf": "PI",
-  "signo": "Capricórnio"
+  "signo": "Capricórnio",
+  "inicio": "2024-03-18"
  },
  {
   "emoji": "👻",
   "nome": "Luysa",
   "cidade": "Cuiabá",
   "uf": "MT",
-  "signo": "Capricórnio"
+  "signo": "Capricórnio",
+  "inicio": "2024-05-20"
  },
  {
   "emoji": "🧚🏻‍♀️",
   "nome": "Damy",
   "cidade": "Jaguaruna",
   "uf": "SC",
-  "signo": "Áries"
+  "signo": "Áries",
+  "inicio": "2024-03-25"
  },
  {
   "emoji": "🦈",
   "nome": "Julia",
   "cidade": "Esteio",
   "uf": "RS",
-  "signo": "Gêmeos"
+  "signo": "Gêmeos",
+  "inicio": "2024-02-19"
  }
 ]

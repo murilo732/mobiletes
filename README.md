@@ -6,11 +6,12 @@ Mapa interativo de onde moram os colaboradores ativos da Mobi. Publicado via Git
 
 1. Ler a base **💵 Fin Mobi** (`appi3j4m3s7i41R5B`), tabela **👩🏻‍💻 Colaboradores** (`tblI5ylai9O8vuCzc`).
    Campos: `Status` (`fldmcW6BKkvvMyEQI`), `Fname` (`fldduDYDMVgmKK9Kf`), `Emoji Text` (`fldWbwUe0KPERxtZW`),
-   `Endereço - Município` (`fldPqDnvKcyXtIiWZ`, vínculo com nome "Cidade - UF"), `Data de Nascimento` (`fldPaVSRHaf3SQ4y3`).
+   `Endereço - Município` (`fldPqDnvKcyXtIiWZ`, vínculo com nome "Cidade - UF"), `Data de Nascimento` (`fldPaVSRHaf3SQ4y3`), `Data Início` (`fldJHzNcJk7DGpsig`).
 2. Manter só `Status = Ativo` **com** município preenchido. Ignorar Desligado, Inativo e Frila Externo.
-3. Reescrever `dados/equipe.json` com `{"emoji", "nome" (Fname, sem espaços sobrando), "cidade", "uf", "signo"}`.
+3. Reescrever `dados/equipe.json` com `{"emoji", "nome" (Fname, sem espaços sobrando), "cidade", "uf", "signo", "inicio"}`.
    O signo sai de `signos.signo("AAAA-MM-DD")`. **A data de nascimento nunca vai para o repositório**, só o signo.
-   Sem data cadastrada, omitir `signo`.
+   Sem data cadastrada, omitir `signo`. `inicio` é a Data Início (AAAA-MM-DD); o site calcula o tempo de Mobi
+   em anos e meses na hora em que a página abre. Sem Data Início, omitir `inicio`.
 4. Rodar `python3 build.py`. Se ele listar cidades sem coordenada, acrescentar `"Cidade - UF": [lat, lon]`
    (centro do município) em `dados/cidades.json` e rodar de novo.
 5. Commit e push na branch `main` só se `dados/` ou `index.html` mudaram.

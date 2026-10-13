@@ -32,7 +32,7 @@ if faltando:
 ppl = []
 for p in equipe:
     x, y = proj(*cidades[f'{p["cidade"]} - {p["uf"]}'])
-    ppl.append({"e": p["emoji"] or "🙂", "n": p["nome"], "c": p["cidade"], "uf": p["uf"], "x": x, "y": y, "s": p.get("signo")})
+    ppl.append({"e": p["emoji"] or "🙂", "n": p["nome"], "c": p["cidade"], "uf": p["uf"], "x": x, "y": y, "s": p.get("signo"), "t": p.get("inicio")})
 
 data = sys.argv[1] if len(sys.argv) > 1 else datetime.date.today().isoformat()
 data_br = "/".join(reversed(data.split("-")))
