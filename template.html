@@ -244,17 +244,17 @@ const ORDEM = ['Áries','Touro','Gêmeos','Câncer','Leão','Virgem','Libra','Es
 let filtroSigno = null;
 cities.forEach(c => c.n = c.ppl.length);
 const sgBox = document.getElementById('signos');
-function chip(nome, n, glifo) {
+function chip(nome, n, glifo, ps) {
   const b = document.createElement('button'); b.className = 'uf sgc'; b.dataset.s = nome || '';
   b.setAttribute('aria-pressed', 'false');
-  b.innerHTML = (glifo ? '<span class="gl">' + glifo + '\uFE0E</span>' : '') + (nome || 'Todos') + ' <em>' + n + '</em>';
+  b.innerHTML = (glifo ? '<span class="gl">' + glifo + '\uFE0E</span>' : '') + (nome || 'Todos') + (ps ? ' <i>' + ps.map(p => p.e).join('') + '</i>' : '') + ' <em>' + n + '</em>';
   b.onclick = () => aplicarSigno(nome && filtroSigno !== nome ? nome : null);
   sgBox.appendChild(b);
 }
 const porSigno = {}; D.p.forEach(p => { if (p.s) (porSigno[p.s] = porSigno[p.s] || []).push(p); });
 if (Object.keys(porSigno).length) {
   chip(null, D.p.length);
-  ORDEM.filter(s => porSigno[s]).forEach(s => chip(s, porSigno[s].length, SIGNO[s]));
+  ORDEM.filter(s => porSigno[s]).forEach(s => chip(s, porSigno[s].length, SIGNO[s], porSigno[s]));
 } else { sgBox.closest('.filtro').hidden = true; }
 function aplicarSigno(s) {
   filtroSigno = s; touch();
